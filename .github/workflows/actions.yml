@@ -23,11 +23,17 @@ jobs:
         run: |
           i_s=${{ github.event.inputs.commit_sha }}
           sha=${{ github.sha }}
-          one_liner=$i_s || $sha
+
+          if [ -z $i_s ]; then
+            o=$sha
+          else
+            o=$i_s
+          fi
+
           echo "::set-ouput name=workflow_sha::$sha" 
           echo $i_s
           echo $sha
-          echo $one_liner
+          echo $o
 
   build:
     needs: [prepare]
