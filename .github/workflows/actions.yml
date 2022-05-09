@@ -4,8 +4,8 @@ on:
   push: 
   workflow_dispatch:
     inputs:
-      ref:
-        description: 'ref'
+      commit_sha:
+        description: 'Commit SHA'
         required: true
 
 env:
@@ -21,8 +21,10 @@ jobs:
       - name: Set the SHA to checkout to
         id: step1
         run: |
+          i_s=${{ github.event.inputs.commit_sha }}
           sha=${{ github.sha }}
           echo "::set-ouput name=workflow_sha::$sha" 
+          echo $i_s
           echo $sha
 
   build:
