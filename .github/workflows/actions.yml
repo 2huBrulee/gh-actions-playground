@@ -42,7 +42,7 @@ jobs:
       run: echo ${{ github.sha }}
 
     - name: tagos
-      run: git tag --contains ${{ github.ref_name }}
+      run: git tag --contains ${{ github.sha }}
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
