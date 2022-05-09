@@ -30,12 +30,16 @@ jobs:
             workflow_sha=$i_s
           fi
 
+          echo $workflow_sha
           echo "::set-ouput name=workflow_sha::$workflow_sha" 
 
   build:
     needs: [prepare]
     runs-on: ubuntu-latest
     steps:
+    - name: Check
+      run: echo ${{ needs.prepare.outputs.workflow_sha }}
+      
     - uses: actions/checkout@v3
       with:
         ref: ${{ needs.prepare.outputs.workflow_sha }}
