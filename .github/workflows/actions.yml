@@ -23,7 +23,7 @@ jobs:
         run: |
           i_s=${{ github.event.inputs.commit_sha }}
           sha=${{ github.sha }}
-          one_liner=i_s || sha
+          one_liner=$i_s || $sha
           echo "::set-ouput name=workflow_sha::$sha" 
           echo $i_s
           echo $sha
