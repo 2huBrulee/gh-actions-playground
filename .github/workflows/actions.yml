@@ -31,14 +31,14 @@ jobs:
           fi
 
           echo $workflow_sha
-          echo "::set-ouput name=workflow_sha::$workflow_sha" 
+          echo "::set-output name=workflow_sha::$workflow_sha" 
 
   build:
     needs: [prepare]
     runs-on: ubuntu-latest
     steps:
     - name: Check
-      run: echo "${{ needs.prepare.outputs.workflow_sha }}"
+      run: echo ${{ needs.prepare.outputs.workflow_sha }}
 
     - uses: actions/checkout@v3
       with:
