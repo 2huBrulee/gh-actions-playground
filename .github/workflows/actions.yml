@@ -21,7 +21,7 @@ jobs:
       - name: Set the SHA to checkout to
         id: step1
         run: |
-          sha = ${{ github.sha }}
+          sha=${{ github.sha }}
           echo "::set-ouput name=workflow_sha::$sha" 
           echo $sha
 
