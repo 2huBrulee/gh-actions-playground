@@ -25,15 +25,12 @@ jobs:
           sha=${{ github.sha }}
 
           if [ -z $i_s ]; then
-            o=$sha
+            workflow_sha=$sha
           else
-            o=$i_s
+            workflow_sha=$i_s
           fi
 
-          echo "::set-ouput name=workflow_sha::$sha" 
-          echo $i_s
-          echo $sha
-          echo $o
+          echo "::set-ouput name=workflow_sha::$workflow_sha" 
 
   build:
     needs: [prepare]
@@ -67,7 +64,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}
+        IMAGE_TAG: ${{ needs.prepare.outputs.workflow_sha }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
