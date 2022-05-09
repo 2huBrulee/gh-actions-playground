@@ -13,10 +13,25 @@ env:
   ECR_REPOSITORY: testrepo 
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      workflow_sha: ${{ steps.step1.outputs.test }}
+    steps:
+      - name: Set the SHA to checkout to
+        id: step1
+        run: |
+          sha = ${{ github.sha }}
+          echo "::set-ouput name=workflow_sha::$sha" 
+          echo $sha
+
   build:
+    needs: [prepare]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: ${{ needs.prepare.outputs.workflow_sha }}
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
