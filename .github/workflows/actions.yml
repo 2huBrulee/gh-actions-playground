@@ -34,7 +34,7 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: refo
-      run: echo ${{ github.ref }}
+      run: echo ${{ github.ref_name }}
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
