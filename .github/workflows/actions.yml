@@ -38,6 +38,12 @@ jobs:
     - name: refo
       run: echo ${{ github.ref_name }}
 
+    - name: shawarma
+      run: echo ${{ github.sha }}
+
+    - name: tagos
+      run: git tag --contains ${{ github.ref_name }}
+
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
