@@ -36,6 +36,8 @@ jobs:
   build:
     needs: [prepare]
     runs-on: ubuntu-latest
+    env: 
+      SHA: ${{ needs.prepare.outputs.workflow_sha }}
     steps:
     - name: Check
       run: echo ${{ needs.prepare.outputs.workflow_sha }}
@@ -59,10 +61,10 @@ jobs:
       run: echo ${{ github.ref_name }}
 
     - name: shawarma
-      run: echo ${{ github.sha }}
+      run: echo $SHA
 
     - name: tagos
-      run: git tag --contains ${{ github.sha }}
+      run: git tag --contains $SHA
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
@@ -72,7 +74,7 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        IMAGE_TAG=${{ needs.prepare.outputs.workflow_sha }}
+        IMAGE_TAG=$SHA
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
