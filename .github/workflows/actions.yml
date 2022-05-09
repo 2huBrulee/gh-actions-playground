@@ -16,7 +16,7 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     outputs:
-      workflow_sha: ${{ steps.step1.outputs.test }}
+      workflow_sha: ${{ steps.step1.outputs.workflow_sha }}
     steps:
       - name: Set the SHA to checkout to
         id: step1
