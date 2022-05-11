@@ -20,7 +20,7 @@ jobs:
       workflow_sha: ${{ steps.step1.outputs.workflow_sha }}
     steps:
       - name: get sha
-        run: echo $SHA
+        run: echo ${{ env.SHA }}
       - name: Set the SHA to checkout to
         id: step1
         run: |
